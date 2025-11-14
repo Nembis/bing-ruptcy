@@ -1,0 +1,55 @@
+Table users [headercolor: #175e7a] {
+	id integer [ pk, increment, not null, unique ]
+	user_name varchar(20) [ not null, unique ]
+	email varchar(254) [ not null, unique ]
+	created_at timestamp [ not null, default: Current_Timestamp ]
+	updated_at timestamp [ not null, default: Current_Timestamp ]
+	magic_link varchar(32)
+}
+
+Table recurring_themes [headercolor: #175e7a] {
+	id integer [ pk, increment, not null, unique ]
+	created_at timestamp [ not null, default: Current_Timestamp ]
+	updated_at timestamp [ not null, default: Current_Timestamp ]
+	theme text [ not null, unique ]
+	user_id integer [ not null ]
+	theme_status varchar(8) [ not null ]
+	decline_reason text
+}
+
+Table episode_reference [headercolor: #175e7a] {
+	id integer [ pk, increment, not null, unique ]
+	video_id text [ not null ]
+	time_range text
+	recurring_theme_id integer [ not null ]
+	created_at timestamp [ not null, default: Current_Timestamp ]
+	updated_at timestamp [ not null, default: Current_Timestamp ]
+}
+
+Table bingo_card_cells [headercolor: #175e7a] {
+	id integer [ pk, increment, not null, unique ]
+	created_at timestamp [ not null ]
+	updated_at timestamp [ not null ]
+	card_id varchar(255) [ not null ]
+	recurring_theme_id integer [ not null ]
+	x integer [ not null ]
+	y integer [ not null ]
+	selected boolean [ not null, default: FALSE ]
+	user_id integer [ not null ]
+}
+
+Ref fk_users_id_recurring_themes {
+	users.id < recurring_themes.user_id [ delete: no action, update: no action ]
+}
+
+Ref fk_episode_reference_recurring_theme_id_recurring_themes {
+	episode_reference.recurring_theme_id > recurring_themes.id [ delete: no action, update: no action ]
+}
+
+Ref fk_bingo_cards_recurring_theme_id_recurring_themes {
+	bingo_card_cells.recurring_theme_id > recurring_themes.id [ delete: no action, update: no action ]
+}
+
+Ref fk_bingo_cards_user_id_users {
+	bingo_card_cells.user_id > users.id [ delete: cascade, update: no action ]
+}
