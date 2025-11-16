@@ -27,4 +27,6 @@ func main() {
 		return
 	}
 	slog.Info("Migration completed")
+
+	slog.Info("Hello this is a message")
 }
