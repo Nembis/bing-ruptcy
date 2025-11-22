@@ -1,5 +1,8 @@
 .env
 
 db/
+logs/alloy/
+logs/grafana/
+logs/loki/
 pgadmin_data/
 tmp/

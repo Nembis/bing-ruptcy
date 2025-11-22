@@ -24,6 +24,14 @@ services:
       timeout: 5s
       retries: 5
 
+  grafana:
+    environment:
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_BASIC_ENABLED=false
+    ports:
+      - ${GRAFANA_PORT}:3000/tcp
+
   pgadmin:
     container_name: pgadmin
     image: dpage/pgadmin4
@@ -42,8 +50,6 @@ services:
         condition: service_healthy
 
   busybox:
-    image: busybox
-    command: ["sh", "-c", "chown -R 5050:0 /tmp/pgadmin_data"]
+    command: ["dev"]
     volumes:
       - ./pgadmin_data:/tmp/pgadmin_data
-    restart: no
