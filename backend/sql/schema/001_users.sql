@@ -7,6 +7,7 @@ CREATE TABLE IF NOT EXISTS "users" (
 	"created_at" TIMESTAMP NOT NULL DEFAULT Current_Timestamp,
 	"updated_at" TIMESTAMP NOT NULL DEFAULT Current_Timestamp,
 	"magic_link" VARCHAR(32),
+	"magic_link_created_at" TIMESTAMP,
 	PRIMARY KEY("id")
 );
 
